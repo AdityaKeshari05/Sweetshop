@@ -225,8 +225,7 @@ export function buildSeed(userId = 'u_owner'): State {
     const n = Math.round((11 + rnd() * 5) * (weekend ? 1.4 : 1) * (off < 12 && off > 3 ? 1.1 : 1))
     genDay(day, n, false, new Set(), 10 * 60 + 5, 21 * 60 + 50)
   }
-  genDay(today, 22, true, new Set(['Rasmalai', 'Besan Laddu', 'Mishti Doi', 'Sandesh', 'Jalebi', 'Gulab Jamun', 'Soan Papdi', 'Assorted Sweet Box', 'Kaju Katli Gift Box', 'Dry Fruit Premium Box', 'Kaju Katli', 'Motichoor Laddu']), 10 * 60 + 8, 15 * 60 + 40)
-  setClock(null)
+  // today's counter sales are generated after the orders (below) so they can never consume stock the orders need
 
   /* ---------- expenses ---------- */
   for (let off = 36; off >= 0; off--) {
@@ -357,6 +356,10 @@ export function buildSeed(userId = 'u_owner'): State {
   O({ cust: 'Kolkata Club', items: [['Kaju Katli', 10], ['Motichoor Laddu', 15], ['Namkeen Mixture', 10]], due: 7, kind: 'Bulk', delivery: 'Delivery', advance: adv(10000), festivalId: 'fes_diwali', packaging: 'Bulk trays, 1 kg packs' }, ['advance'], 2, 16)
   O({ cust: "St. Xavier's", items: [['Assorted Sweet Box', 30]], due: 20, kind: 'Bulk', delivery: 'Pickup', advance: adv(5000, 'Cash'), festivalId: 'fes_xmas', packaging: 'Green & red wrap' }, [], 0, 17)
   O({ cust: 'Gupta Caterers', items: [['Anjeer Roll', 5], ['Pista Barfi', 3]], due: 35, kind: 'Bulk', delivery: 'Delivery', festivalId: 'fes_ny' }, [], 0, 18)
+
+  /* ---------- today's counter sales (after orders have reserved their stock) ---------- */
+  genDay(today, 22, true, new Set(['Rasmalai', 'Besan Laddu', 'Mishti Doi', 'Sandesh', 'Jalebi', 'Gulab Jamun', 'Soan Papdi', 'Assorted Sweet Box', 'Kaju Katli Gift Box', 'Dry Fruit Premium Box', 'Kaju Katli', 'Motichoor Laddu']), 10 * 60 + 8, 15 * 60 + 40)
+  setClock(null)
   clearMemo(d)
 
   /* ---------- daily opening / closing records ---------- */
